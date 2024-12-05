@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginPage from "./components/pages/LoginPage";
 import SignUpPage from "./components/pages/SignUpPage";
 import ProtectedRouter from "./HOC/ProtectedRouter";
-import HelloPage from "./components/pages/HelloPage";
+import MainPage from "./components/pages/MainPage";
 import Layout from "./components/Layout";
 import useUser from "./components/hooks/useUser";
 import AddPostCard from "./components/ui/AddPostCard";
@@ -18,7 +18,7 @@ function App() {
       children: [
         {
           path: '/',
-          element: <HelloPage user={user} />,
+          element: <MainPage user={user} />,
         },
         {
           element: (
@@ -28,7 +28,10 @@ function App() {
             />
           ),
           children: [
-            
+            {
+              path: '/routes',
+              element: <PostsPage user={user} />,
+            },
             {
               path: '/posts/new',
               element: <AddPostCard />,
