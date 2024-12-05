@@ -156,4 +156,23 @@ routeRouter.route(":id/rate").post(verifyAccessToken, async (req, res) => {
     res.status(500).json({ message: "Ошибка сервера" });
   }
 });
+
+routeRouter.route("/:id/ratingsAll").get(async (req, res) => {
+  try {
+    const { id } = req.params;
+    const route = await Route.findByPk(id);
+
+    if (!route) {
+      return res.status(404).json({ message: "Маршрут не найден" });
+    }
+
+    const ratings = await Rating.findAll({ where: { routeId: id } });
+
+    res.json(ratings);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Ошибка сервера" });
+  }
+});
+
 module.exports = routeRouter;

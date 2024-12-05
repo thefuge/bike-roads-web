@@ -29,6 +29,7 @@ export default function MainPage({ user }) {
         <div
           style={{
             display: 'flex',
+            justifyContent: 'center',
             flexWrap: 'wrap',
             marginLeft: '25%',
             flexDirection: 'column',
