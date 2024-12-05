@@ -1,7 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginPage from "./components/pages/LoginPage";
 import SignUpPage from "./components/pages/SignUpPage";
-import PostsPage from "./components/pages/PostsPage";
 import ProtectedRouter from "./HOC/ProtectedRouter";
 import HelloPage from "./components/pages/HelloPage";
 import Layout from "./components/Layout";
@@ -29,10 +28,7 @@ function App() {
             />
           ),
           children: [
-            {
-              path: '/posts',
-              element: <PostsPage user={user} />,
-            },
+            
             {
               path: '/posts/new',
               element: <AddPostCard />,
@@ -42,10 +38,7 @@ function App() {
         {
           element: <ProtectedRouter isAllowed={user.status !== 'logged'} redirect="/" />,
           children: [
-            {
-              path: '/posts',
-              element: <PostsPage user={user} />,
-            },
+            
 
             {
               path: '/account/new',

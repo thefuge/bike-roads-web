@@ -1,6 +1,6 @@
 const routeRouter = require("express").Router();
 const { User, Route, Rating } = require("../../db/models");
-const { verifyAccessToken } = require("../middlewares/verifyAccessToken");
+const  verifyAccessToken  = require("../middlewares/verifyAccessToken");
 const countDistance = require("../middlewares/countDistance");
 
 routeRouter
@@ -155,3 +155,4 @@ routeRouter.route(":id/rate").post(verifyAccessToken, async (req, res) => {
     res.status(500).json({ message: "Ошибка сервера" });
   }
 });
+module.exports = routeRouter;
