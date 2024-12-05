@@ -34,6 +34,7 @@ module.exports = {
       },
       routeReview: {
         type: Sequelize.STRING,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,

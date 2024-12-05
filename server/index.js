@@ -21,14 +21,35 @@ async function main() {
       include: [
         {
           model: Rating,
-          as: 'ratings', 
-          attributes: [], 
+          as: "ratings",
+          attributes: [],
         },
       ],
-      group: ["Route.id"], 
-      order: [[sequelize.col("average_rating"), "DESC"]], 
+      group: ["Route.id"],
+      order: [[sequelize.col("average_rating"), "DESC"]],
     });
+
+    // const formattedRoutes = allRated.map((route) => ({
+    //   ...route.toJSON(), // Преобразуем в объект
+    //   averageRating: route.dataValues.average_rating, // Добавляем averageRating
+    // }));
+
+
     console.dir(pretty(allRated), { depth: null });
+
+    // const id = 1;
+    // const oneRoute = await Route.findByPk(id);
+
+    // const ratings = await Rating.findAll({
+    //   where: { routeId: id },
+    // });
+
+    // const averageRating =
+    //   ratings.length > 0
+    //     ? ratings.reduce((sum, rating) => sum + rating.routeRate, 0) /
+    //       ratings.length
+    //     : 0;
+    // console.log({ ...oneRoute.toJSON(), averageRating });
   } catch (error) {
     console.log(error);
   }
