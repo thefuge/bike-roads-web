@@ -28,7 +28,7 @@ export default function NavBar({ user, logoutHandler }) {
           <Navbar.Brand className="navbar-brend"></Navbar.Brand>
 
           <Nav className="me-auto">
-            <NavLink className="nav-link" to={'/'}>
+            <NavLink className="nav-link" to={'/profile'}>
               <HomeIcon color="ction" />
               Профиль⌂
             </NavLink>

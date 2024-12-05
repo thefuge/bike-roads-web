@@ -6,7 +6,8 @@ import MainPage from "./components/pages/MainPage";
 import Layout from "./components/Layout";
 import useUser from "./components/hooks/useUser";
 import AddPostCard from "./components/ui/AddPostCard";
-import OneRouteP from "./components/pages/OneRouteP";
+import ProfilePage from "./components/pages/ProfilePage";
+
 
 function App() {
   const { logoutHandler, signInHandler, signUpHandler, user } = useUser();
@@ -29,17 +30,13 @@ function App() {
           ),
           children: [
             {
-              path: '/routes',
-              element: <MainPage user={user} />,
+              path: '/profile',
+              element: <ProfilePage user={user} />,
             },
             {
               path: '/posts/new',
               element: <AddPostCard />,
             },
-            {
-              path: '/reviews',
-              element: <OneRouteP />,
-            }
           ],
         },
         {

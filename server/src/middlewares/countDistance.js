@@ -17,6 +17,6 @@ function countDistance(start, end) {
 
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-  return R * c * 1000;
+  return Math.round(R * c * 1000);
 }
 module.exports = countDistance;
