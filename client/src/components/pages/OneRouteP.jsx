@@ -5,14 +5,13 @@ export default function BikeRiderZPage() {
   const [reviews, setReviews] = useState([]);
   const [editingReview, setEditingReview] = useState(null);
   const [userReview, setUserReview] = useState(null);
+  const [newReview, setNewReview] = useState({ rating: "", comment: "" });
 
   useEffect(() => {
-    // Загружаем существующие отзывы с сервера
     const fetchReviews = async () => {
       try {
-        const response = await axios.get("/api/reviews");
+        const response = await axios.get("/routes/:id_with_averagegRating");
         setReviews(response.data);
-        // Находим отзыв текущего пользователя
         const userReview = response.data.find(
           (review) => review.userId === localStorage.getItem("userId")
         );
@@ -25,7 +24,6 @@ export default function BikeRiderZPage() {
   }, []);
 
   const handleEditReview = (review) => {
-    // Проверяем, является ли текущий пользователь автором отзыва
     if (review.userId === localStorage.getItem("userId")) {
       setEditingReview(review);
     } else {
@@ -41,7 +39,7 @@ export default function BikeRiderZPage() {
   const handleReviewSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.put(`/api/reviews/${editingReview.id}`, editingReview);
+      await axios.put(`/routes/:id_with_averagegRating${editingReview.id}`, editingReview);
       setReviews((prevReviews) =>
         prevReviews.map((review) =>
           review.id === editingReview.id ? editingReview : review
@@ -54,7 +52,6 @@ export default function BikeRiderZPage() {
   };
 
   const handleDeleteReview = async (reviewId) => {
-    // тут у нас удаление отзыва с обновлением состояния
     try {
       await axios.delete(`/api/reviews/${reviewId}`);
       setReviews((prevReviews) =>
@@ -66,21 +63,38 @@ export default function BikeRiderZPage() {
     }
   };
 
+  const handleNewReviewChange = (event) => {
+    const { name, value } = event.target;
+    setNewReview((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleAddReview = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post("/api/reviews", {
+        ...newReview,
+        userId: localStorage.getItem("userId"),
+      });
+      setReviews((prevReviews) => [...prevReviews, response.data]);
+      setNewReview({ rating: "", comment: "" });
+    } catch (error) {
+      console.error("Ошибка при добавлении отзыва:", error);
+    }
+  };
+
   return (
     <div>
       <h2>BikeRiderZ</h2>
       <div>
-        <h3>Reviews:</h3>
+        <h3>Отзывы:</h3>
         {reviews.map((review, index) => (
           <div key={index}>
-            <p>Rating: {review.rating}</p>
+            <p>Рейтинг: {review.rating}</p>
             <p>{review.comment}</p>
             {review.userId === localStorage.getItem("userId") && (
               <div>
-                <button onClick={() => handleEditReview(review)}>Edit</button>
-                <button onClick={() => handleDeleteReview(review.id)}>
-                  Delete
-                </button>
+                <button onClick={() => handleEditReview(review)}>Редактировать</button>
+                <button onClick={() => handleDeleteReview(review.id)}>Удалить</button>
               </div>
             )}
           </div>
@@ -89,14 +103,9 @@ export default function BikeRiderZPage() {
       {userReview ? (
         <p>
           Вы уже оставили отзыв. Вы можете его{" "}
-          <button onClick={() => handleEditReview(userReview)}>
-            редактировать
-          </button>{" "}
+          <button onClick={() => handleEditReview(userReview)}>редактировать</button>{" "}
           или{" "}
-          <button onClick={() => handleDeleteReview(userReview.id)}>
-            удалить
-          </button>
-          .
+          <button onClick={() => handleDeleteReview(userReview.id)}>удалить</button>.
         </p>
       ) : (
         <p>Вы еще не оставили отзыв.</p>
@@ -118,7 +127,7 @@ export default function BikeRiderZPage() {
             </select>
           </label>
           <label>
-            Отзывы:
+            Отзыв:
             <textarea
               name="comment"
               value={editingReview.comment}
@@ -128,6 +137,39 @@ export default function BikeRiderZPage() {
           <button type="submit">Сохранить</button>
         </form>
       )}
+      {!userReview && (
+        <form onSubmit={handleAddReview}>
+          <h3>Добавить новый отзыв:</h3>
+          <label>
+            Рейтинг:
+            <select
+              name="rating"
+              value={newReview.rating}
+              onChange={handleNewReviewChange}
+              required
+            >
+              <option value="">Выберите рейтинг</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </label>
+          <label>
+            Отзыв:
+            <textarea
+              name="comment"
+              value={newReview.comment}
+              onChange={handleNewReviewChange}
+              required
+            />
+          </label>
+          <button type="submit">Добавить отзыв</button>
+        </form>
+      )}
     </div>
   );
 }
+
+

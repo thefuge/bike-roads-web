@@ -6,7 +6,7 @@ import MainPage from "./components/pages/MainPage";
 import Layout from "./components/Layout";
 import useUser from "./components/hooks/useUser";
 import AddPostCard from "./components/ui/AddPostCard";
-
+import OneRouteP from "./components/pages/OneRouteP";
 
 function App() {
   const { logoutHandler, signInHandler, signUpHandler, user } = useUser();
@@ -36,6 +36,10 @@ function App() {
               path: '/posts/new',
               element: <AddPostCard />,
             },
+            {
+              path: '/reviews',
+              element: <OneRouteP />,
+            }
           ],
         },
         {
