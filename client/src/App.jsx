@@ -30,7 +30,7 @@ function App() {
           children: [
             {
               path: '/routes',
-              element: <PostsPage user={user} />,
+              element: <MainPage user={user} />,
             },
             {
               path: '/posts/new',
