@@ -19,7 +19,9 @@ export default function NavBar({ user, logoutHandler }) {
         style={{ width: '100%', backgroundColor: 'lightGray' }}
       >
         <Container>
-          <span style={{fontSize: '30px'}}>{user.status === 'logged' ? user?.data.name : 'Гость'}</span>
+          <span style={{ fontSize: '30px' }}>
+            {user.status === 'logged' ? user?.data.name : 'Гость'}
+          </span>
           <Image
             src={img}
             alt="img"
