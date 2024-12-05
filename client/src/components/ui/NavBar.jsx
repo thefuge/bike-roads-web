@@ -14,22 +14,23 @@ function HomeIcon(props) {
 export default function NavBar({ user, logoutHandler }) {
   return (
     <div>
-      <Navbar data-bs-theme="light"  style={{ width: '100%', backgroundColor: 'lightGray' }}>
+      <Navbar
+        data-bs-theme="light"
+        style={{ width: '100%', backgroundColor: 'lightGray' }}
+      >
         <Container>
-          {user.status === 'logged' ? user?.data.name : 'Гость'}
-         
-          <Image src={img} alt='img' style={{ width: '50px'}}/>
-          <Navbar.Brand className="navbar-brend">
-          </Navbar.Brand>
-          
+          <span style={{fontSize: '30px'}}>{user.status === 'logged' ? user?.data.name : 'Гость'}</span>
+          <Image
+            src={img}
+            alt="img"
+            style={{ width: '55px', marginRight: '75%' }}
+          />
+          <Navbar.Brand className="navbar-brend"></Navbar.Brand>
+
           <Nav className="me-auto">
             <NavLink className="nav-link" to={'/'}>
               <HomeIcon color="ction" />
-              Домой
-            </NavLink>
-            <NavLink className="nav-link" to={'/posts'}>
-              {' '}
-              Маршруты
+              Профиль⌂
             </NavLink>
             <NavLink className="nav-link" to={'/posts/new'}>
               {' '}
@@ -52,7 +53,6 @@ export default function NavBar({ user, logoutHandler }) {
               </>
             )}
           </Nav>
-
         </Container>
       </Navbar>
     </div>

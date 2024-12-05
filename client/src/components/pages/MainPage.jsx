@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-// import axios from 'axios';
-import Image from 'react-bootstrap/Image';
-import img from '../assets/bikeicon.png';
+import RouteCard from '../ui/RouteCard';
+import { Row } from 'react-bootstrap';
 
 export default function MainPage({ user }) {
-  const [route, setRoute] = useState([]);
-  console.log(route);
-
+  const [routes, setRoutes] = useState([]);
   const getRoutes = async () => {
     try {
-      const res = await fetch('/routes/allRated');
+      const res = await fetch('/api/routes/allRated');
       if (res.status === 200) {
         const data = await res.json();
-        setRoute(data);
+        setRoutes(data);
       }
     } catch (error) {
       console.log(error);
@@ -24,19 +21,26 @@ export default function MainPage({ user }) {
   useEffect(() => {
     getRoutes();
   }, []);
+
   return (
     <>
-      <Card style={{ width: '18rem' }}>
-        {/* КАРТА С МАРШРУТОМ <Card.Img variant="top" src="holder.js/100px180" /> */}
-        <Image src={img} alt='img' />
-        <Card.Body>
-          <Card.Title>route.title</Card.Title>
-          <Card.Text>route.location</Card.Text>
-          <Card.Text>route.length</Card.Text>
-          <Card.Text>ownerId</Card.Text>
-          <Button variant="primary" style={{width: '100%'}}>Подробнее</Button>
-        </Card.Body>
-      </Card>
+    <h1>ПРИВЕТ</h1>
+      <Row>
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            marginLeft: '25%',
+            flexDirection: 'column',
+            gap: '25px',
+            marginTop: '25px',
+          }}
+        >
+          {routes.map((el) => (
+            <RouteCard key={el.id} route={el} user={user}></RouteCard>
+          ))}
+        </div>
+      </Row>
     </>
   );
 }

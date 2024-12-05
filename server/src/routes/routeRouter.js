@@ -1,6 +1,6 @@
 const routeRouter = require("express").Router();
-const { User, Route, Rating } = require("../../db/models");
-const { verifyAccessToken } = require("../middlewares/verifyAccessToken");
+const { User, Route, Rating, sequelize } = require("../../db/models");
+const verifyAccessToken = require("../middlewares/verifyAccessToken");
 const countDistance = require("../middlewares/countDistance");
 
 routeRouter
@@ -67,6 +67,7 @@ routeRouter.route("/allRated").get(async (req, res) => {
       group: ["Route.id"],
       order: [[sequelize.col("average_rating"), "DESC"]],
     });
+    console.log(allRated, 123456789)
     res.json(allRated);
   } catch (error) {
     console.log(error);
@@ -155,3 +156,5 @@ routeRouter.route(":id/rate").post(verifyAccessToken, async (req, res) => {
     res.status(500).json({ message: "Ошибка сервера" });
   }
 });
+
+module.exports = routeRouter;

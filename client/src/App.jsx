@@ -30,7 +30,7 @@ function App() {
           ),
           children: [
             {
-              path: '/posts',
+              path: '/routes',
               element: <PostsPage user={user} />,
             },
             {
