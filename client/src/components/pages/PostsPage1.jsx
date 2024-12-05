@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../api/axiosInstance";
 import PostsCard from "../ui/PostsCard";
