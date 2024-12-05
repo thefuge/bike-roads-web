@@ -67,7 +67,7 @@ routeRouter.route("/allRated").get(async (req, res) => {
       group: ["Route.id"],
       order: [[sequelize.col("average_rating"), "DESC"]],
     });
-    console.log(allRated, 123456789)
+  
     res.json(allRated);
   } catch (error) {
     console.log(error);

@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import RouteCard from '../ui/RouteCard';
 import { Row } from 'react-bootstrap';
+import CardMapComponent from '../ui/CardMapComponent';
 
 export default function MainPage({ user }) {
   const [routes, setRoutes] = useState([]);
@@ -38,7 +39,7 @@ export default function MainPage({ user }) {
           }}
         >
           {routes.map((el) => (
-            <RouteCard key={el.id} route={el} user={user}></RouteCard>
+            <CardMapComponent key={el.id} route={el} user={user}></CardMapComponent>
           ))}
         </div>
       </Row>
