@@ -156,5 +156,4 @@ routeRouter.route(":id/rate").post(verifyAccessToken, async (req, res) => {
     res.status(500).json({ message: "Ошибка сервера" });
   }
 });
-
 module.exports = routeRouter;
