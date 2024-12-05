@@ -7,9 +7,9 @@ export default function SignUpPage({ signUpHandler }) {
   return (
     <Container
       className="justify-content-center align-items-center mt-5"
-      style={{ width: "500px" }}
+      style={{ display: 'flex', justifyContent: 'center' }}
     >
-      <Form onSubmit={signUpHandler} style={{ padding: "40px" }}>
+      <Form onSubmit={signUpHandler} style={{ width: '50%' }}>
         <Form.Group>
           <Form.Label> Имя</Form.Label>
           <Form.Control type="text" name="name" placeholder="Name" />
@@ -32,7 +32,7 @@ export default function SignUpPage({ signUpHandler }) {
           <Button
             type="submit"
             variant="outline-success"
-            style={{ marginTop: "25px" }}
+            style={{ marginTop: '20px', width: '100%' }}
           >
             Зарегистрироваться
           </Button>

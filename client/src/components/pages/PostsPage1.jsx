@@ -1,7 +1,6 @@
-
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../api/axiosInstance";
-import PostsCard from "../ui/PostsCard";
+import PostsCard from "../ui/RouteCard";
 import { useParams } from "react-router-dom";
 
 export default function PostsPage({ user }) {
