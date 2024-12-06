@@ -49,7 +49,7 @@ export default function CardMapComponent({ route }) {
           <ListGroup.Item>Локация: {route.location}</ListGroup.Item>
           <ListGroup.Item>Начальная точка: {route.startPoint}</ListGroup.Item>
           <ListGroup.Item>Конечная точка: {route.endPoint}</ListGroup.Item>
-          <ListGroup.Item>Расстояние {route.routeLength}</ListGroup.Item>
+          <ListGroup.Item>Расстояние {route.routeLength} метров</ListGroup.Item>
         </ListGroup>
         <Button
           variant="primary"

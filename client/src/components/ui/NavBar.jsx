@@ -5,7 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
-import img from '../assets/bikeicon.png';
+import img from '../assets/123123123.png';
 
 function HomeIcon(props) {
   return <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />;
@@ -22,7 +22,7 @@ export default function NavBar({ user, logoutHandler }) {
       <Image
         src={img}
         alt="img"
-        style={{ width: '55px', marginRight: '75%' }}
+        style={{ width: '100px', marginRight: '75%' }}
       />
 
         <NavLink className="nav-link" to={'/'}>

@@ -11,6 +11,7 @@ import React from "react";
 import { Container, ListGroup, Row } from "react-bootstrap";
 import { GeoObject, Map, YMaps } from "@pbe/react-yandex-maps";
 import ReviewCard from "../ui/ReviewCard";
+import useUser from "../../components/hooks/useUser";
 
 export default function RouteOneCard() {
   const { id } = useParams();
@@ -54,7 +55,10 @@ export default function RouteOneCard() {
     getReviews();
   }, []);
 
+  const { user } = useUser(); // Используйте хук для получения информации о пользователе
+  const [showForm, setShowForm] = useState(false);
   const [newReview, setNewReview] = useState({ rating: "", comment: "" });
+
   const handleNewReviewChange = (event) => {
     const { name, value } = event.target;
     setNewReview((prev) => ({ ...prev, [name]: value }));
@@ -66,23 +70,38 @@ export default function RouteOneCard() {
       const formTarget = event.target;
       const dataForm = new FormData(formTarget);
       const dataForApi = Object.fromEntries(dataForm);
-      const response = await axiosInstance.post(
-        `/routes/${id}/rate`,
-        dataForApi
-      );
-      setReviews((prevReviews) => [response.data, ...prevReviews]); // Добавляем новый отзыв
-      setNewReview({ routeRate: "", routeReview: "" }); // Сбрасываем форму
+      const response = await axiosInstance.post(`/routes/${id}/rate`, dataForApi);
+      setReviews((prevReviews) => [response.data, ...prevReviews]); 
+      const updatedRoute = await fetchUpdatedRoute();
+      setRoute(updatedRoute);
+      setNewReview({ routeRate: "", routeReview: "" }); 
     } catch (error) {
       console.error("Ошибка при добавлении отзыва:", error);
+    }
+  };
+
+  const fetchUpdatedRoute = async () => {
+    try {
+      const res = await fetch(`/api/routes/${id}/with_averagegRating`);
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        throw new Error("Ошибка при получении обновленного маршрута");
+      }
+    } catch (error) {
+      console.error("Ошибка при обновлении среднего рейтинга:", error);
+      return null;
     }
   };
 
   return (
     <>
       <Container>
-        <Card style={{ height: "30rem", width: "50rem" }} key={route.id}>
+        <Card style={{ height: "30rem", width: "50rem", marginTop: "15px" }} key={route.id}>
           <YMaps>
             <Map
+            style={{ width: "100%", height: "100%" }}
               defaultState={{
                 center: parseCoordinates(route.startPoint),
                 zoom: 10,
@@ -109,14 +128,20 @@ export default function RouteOneCard() {
           </Card.Body>
           <ListGroup>
             <ListGroup.Item>
-              Рейтинг: {Number(route.averageRating)}
+              Рейтинг: {Number(route.averageRating).toFixed(2)}
             </ListGroup.Item>
             <ListGroup.Item>Локация: {route.location}</ListGroup.Item>
-            <ListGroup.Item>Расстояние {route.routeLength}</ListGroup.Item>
+            <ListGroup.Item>Расстояние {route.routeLength} метров</ListGroup.Item>
           </ListGroup>
         </Card>
         <Row>
-          <form onSubmit={handleAddReview}>
+        {user.status === "logged" ? ( // Проверка, авторизован ли пользователь
+            <>
+              <Button style={{ width: '70%', marginLeft: '10px'}} variant='primary' onClick={() => setShowForm(!showForm)}>
+                {showForm ? 'Закрыть форму' : 'Добавить отзыв'}
+              </Button>
+              {showForm && (
+          <form onSubmit={handleAddReview} style={{display: 'flex', flexDirection: 'column'}}>
             <h3>Добавить новый отзыв:</h3>
             <label>
               Рейтинг:
@@ -143,9 +168,14 @@ export default function RouteOneCard() {
                 required
               />
             </label>
-            <button type="submit">Добавить отзыв</button>
+            <button  style={{ width: '300px'}} type="submit">Добавить отзыв</button>
           </form>
-          ОТЗЫВЫ
+          )}
+          </>
+        ) : (
+          <p>Пожалуйста, войдите в систему, чтобы оставить отзыв.</p>
+        )}
+        <h3>ОТЗЫВЫ</h3>
           <div className="cardsList">
             {reviews.map((el) => (
               <ReviewCard key={el.id} review={el} />

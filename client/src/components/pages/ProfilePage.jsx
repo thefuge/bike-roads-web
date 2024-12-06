@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Container, Alert } from "react-bootstrap";
 import axiosInstance from "../../api/axiosInstance";
 
 export default function ProfilePage() {
@@ -8,6 +8,7 @@ export default function ProfilePage() {
     55.751574, 37.573856,
   ]);
   const [endCoordinates, setEndCoordinates] = useState([55.761574, 37.583856]);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const handleMapClick = (event) => {
     const coords = event.get("coords");
@@ -39,6 +40,10 @@ export default function ProfilePage() {
       };
       await axiosInstance.post("/routes/", routeData);
       formTarget.reset();
+      setShowSuccessMessage(true);
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+      }, 3000);
     } catch (error) {
       if (error.response?.status === 400) {
         alert("Ваша сессия истекла. Авторизуйтесь снова");
@@ -48,9 +53,13 @@ export default function ProfilePage() {
     }
   };
 
+
   return (
     <>
     <h1 style={{ marginTop: '30px' }}>Введите данные для добавления маршрута:</h1>
+    {showSuccessMessage && (
+          <Alert variant="success" style={{ width: '70%', fontSize: '30px' }}>Ваш маршрут успешно добавлен!</Alert>
+        )}
       <Form
         onSubmit={handleSubmit}
         style={{
