@@ -6,10 +6,9 @@ import Button from 'react-bootstrap/esm/Button';
 export default function LoginPage({ signInHandler }) {
   return (
     <Container
-      className="justify-content-center align-items-center mt-5"
-      style={{ display: 'flex', justifyContent: 'center' }}
+      style={{ display: 'flex', justifyContent: 'center'}}
     >
-      <Form onSubmit={signInHandler} style={{ width: '50%' }}>
+      <Form onSubmit={signInHandler} style={{ width: '50%', marginTop: '100px'}}>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Label>Email</Form.Label>
           <Form.Control

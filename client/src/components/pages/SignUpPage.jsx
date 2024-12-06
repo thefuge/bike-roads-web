@@ -6,15 +6,14 @@ import Button from "react-bootstrap/esm/Button";
 export default function SignUpPage({ signUpHandler }) {
   return (
     <Container
-      className="justify-content-center align-items-center mt-5"
       style={{ display: 'flex', justifyContent: 'center' }}
     >
-      <Form onSubmit={signUpHandler} style={{ width: '50%' }}>
+      <Form onSubmit={signUpHandler} style={{ width: '50%', marginTop: '100px' }}>
         <Form.Group>
           <Form.Label> Имя</Form.Label>
           <Form.Control type="text" name="name" placeholder="Name" />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1" style={{ marginTop: '20px' }}>
           <Form.Label>Email</Form.Label>
           <Form.Control
             type="email"

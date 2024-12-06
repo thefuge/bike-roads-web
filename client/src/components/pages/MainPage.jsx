@@ -25,16 +25,15 @@ export default function MainPage({ user }) {
 
   return (
     <>
-    <h1>ПРИВЕТ</h1>
       <Row>
+    <h1 style={{ marginTop: '25px' }}>Добро пожаловать на BikeRiderZ!</h1>
         <div
           style={{
             display: 'flex',
             justifyContent: 'center',
             flexWrap: 'wrap',
-            marginLeft: '25%',
             flexDirection: 'column',
-            gap: '25px',
+            gap: '50px',
             marginTop: '25px',
           }}
         >

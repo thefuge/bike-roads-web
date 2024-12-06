@@ -50,36 +50,24 @@ export default function ProfilePage() {
 
   return (
     <>
+    <h1 style={{ marginTop: '30px' }}>Введите данные для добавления маршрута:</h1>
       <Form
         onSubmit={handleSubmit}
         style={{
-          padding: "20px",
+          paddingTop: "5px",
           display: "flex",
           flexDirection: "column",
+          justifyContent: 'center',
           alignItems: "baseline",
           gap: "10px",
         }}
-      >
-        <Form.Control
-          name="title"
-          size="sm"
-          type="text"
-          placeholder="Название маршрута"
-          style={{ width: "30%" }}
-        />
-        <Form.Control
-          name="location"
-          size="sm"
-          type="text"
-          placeholder="Населенный пункт"
-          style={{ width: "30%" }}
-        />
+        >
         <YMaps>
           <Map
             defaultState={{ center: startCoordinates, zoom: 11 }}
             onClick={handleMapClick}
-            style={{ alignItems: "center", width: "35%", height: "300px" }}
-          >
+            style={{ alignItems: "center", width: "70%", height: "500px" }}
+            >
             <Placemark
               geometry={startCoordinates}
               options={{ preset: "islands#icon", iconColor: "#0095b6" }}
@@ -87,7 +75,7 @@ export default function ProfilePage() {
               onDragEnd={(event) =>
                 setStartCoordinates(event.get("target").geometry.coordinates)
               }
-            />
+              />
             <Placemark
               geometry={endCoordinates}
               options={{ preset: "islands#icon", iconColor: "#ff0000" }}
@@ -95,19 +83,30 @@ export default function ProfilePage() {
               onDragEnd={(event) =>
                 setEndCoordinates(event.get("target").geometry.coordinates)
               }
-            />
+              />
           </Map>
-          <div>
-            <h3>Координаты:</h3>
-            <p>
-              Начальная точка: {startCoordinates[0]}, {startCoordinates[1]}
-            </p>
-            <p>
-              Конечная точка: {endCoordinates[0]}, {endCoordinates[1]}
-            </p>
-          </div>
         </YMaps>
+        <div>
+          <h3>Координаты:</h3>
+          <p>
+            Начальная точка: {startCoordinates[0]}, {startCoordinates[1]} | Конечная точка: {endCoordinates[0]}, {endCoordinates[1]}
+          </p>
+        </div>
 
+        <Form.Control
+          name="title"
+          size="sm"
+          type="text"
+          placeholder="Название маршрута"
+          style={{ width: "50%", height: "55px", borderRadius: "25px" }}
+        />
+        <Form.Control
+          name="location"
+          size="sm"
+          type="text"
+          placeholder="Населенный пункт"
+          style={{ width: "50%", height: "55px", borderRadius: "25px" }}
+        />
         <Button type="submit" variant="primary">
           Добавить маршрут
         </Button>
