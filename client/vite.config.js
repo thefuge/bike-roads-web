@@ -11,9 +11,10 @@ export default defineConfig({
         changeOrigin: true,
       },
     },
+  },
     build: {
       outDir: '../server/dist'
   },
   base: '/',
-  },
+  
 });
