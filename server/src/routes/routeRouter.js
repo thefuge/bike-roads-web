@@ -102,7 +102,7 @@ routeRouter.route("/:id").get(async (req, res) => {
   }
 });
 
-routeRouter.route("/:id_with_averagegRating").get(async (req, res) => {
+routeRouter.route("/:id/with_averagegRating").get(async (req, res) => {
   try {
     const { id } = req.params;
     const oneRoute = await Route.findByPk(id);
@@ -125,10 +125,13 @@ routeRouter.route("/:id_with_averagegRating").get(async (req, res) => {
   }
 });
 
-routeRouter.route(":id/rate").post(verifyAccessToken, async (req, res) => {
+routeRouter.route("/:id/rate").post(verifyAccessToken, async (req, res) => {
   try {
     const { id } = req.params;
     const { routeRate, routeReview } = req.body;
+
+    console.log('========', id, routeRate, routeReview);
+    
 
     const userId = res.locals.user.id;
     const route = await Route.findByPk(id);

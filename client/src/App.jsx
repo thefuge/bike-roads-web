@@ -6,6 +6,7 @@ import MainPage from "./components/pages/MainPage";
 import Layout from "./components/Layout";
 import useUser from "./components/hooks/useUser";
 import ProfilePage from "./components/pages/ProfilePage";
+import RouteOneCard from "./components/pages/RouteOneCard";
 
 
 function App() {
@@ -34,7 +35,7 @@ function App() {
             },
             {
               path: '/route/:id',
-              element: <MainPage />,
+              element: <RouteOneCard />,
             },
           ],
         },
