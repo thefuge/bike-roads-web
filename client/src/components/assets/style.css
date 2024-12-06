@@ -16,7 +16,7 @@ body {
 .navbar {
   gap: 25px;
   padding-left: 50px;
-  padding-right: 100px;
+  padding-right: 30%;
   background-color: lightGray;
   /* position: fixed; */
   height: 70px;
