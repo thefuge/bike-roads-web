@@ -17,6 +17,7 @@ export default function CardMapComponent({ route }) {
       <Card style={{ height: '30rem', width: '50rem' }} key={route.id}>
         <YMaps>
           <Map
+          style={{ height: '100%', width: '100%' }}
             defaultState={{
               center: [`${xer}`, `${er}`],
               zoom: 10,
