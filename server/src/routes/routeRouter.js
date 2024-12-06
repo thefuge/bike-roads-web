@@ -154,7 +154,12 @@ routeRouter.route("/:id/rate").post(verifyAccessToken, async (req, res) => {
       routeReview: routeReview || null,
     });
 
-    res.json(rating);
+    const user = await User.findByPk(userId);
+
+    res.json({
+      ...rating.toJSON(),
+      userName: user ? user.name : null,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Ошибка сервера" });
