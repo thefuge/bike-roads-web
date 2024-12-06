@@ -5,7 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
-import img from '../assets/bikeicon.png';
+import img from '../assets/123123123.png';
 
 function HomeIcon(props) {
   return <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />;
@@ -13,50 +13,43 @@ function HomeIcon(props) {
 
 export default function NavBar({ user, logoutHandler }) {
   return (
-    <div>
-      <Navbar
-        data-bs-theme="light"
-        style={{ width: '100%', backgroundColor: 'lightGray' }}
-      >
-        <Container>
-          <span style={{ fontSize: '30px' }}>
-            {user.status === 'logged' ? user?.data.name : 'Гость'}
-          </span>
-          <Image
-            src={img}
-            alt="img"
-            style={{ width: '55px', marginRight: '75%' }}
-          />
-          <Navbar.Brand className="navbar-brend"></Navbar.Brand>
+    <Navbar
+    className='navbar'
+      data-bs-theme="light"
+    >
+      {user.status === 'logged' ? user?.data.name : 'Гость'}
 
-          <Nav className="me-auto">
-            <NavLink className="nav-link" to={'/profile'}>
-              <HomeIcon color="ction" />
-              Профиль⌂
-            </NavLink>
-            <NavLink className="nav-link" to={'/posts/new'}>
+      <Image
+        src={img}
+        alt="img"
+        style={{ width: '100px', marginRight: '75%' }}
+      />
+
+        <NavLink className="nav-link" to={'/'}>
+          Главная
+        </NavLink>
+        <NavLink className="nav-link" to={'/profile'}>
+          <HomeIcon color="ction" />
+          Профиль
+        </NavLink>
+        {user.status === 'logged' ? (
+          <Button variant="red" className="ms-auto" onClick={logoutHandler}>
+            {' '}
+            Выйти
+          </Button>
+        ) : (
+          <>
+            <NavLink className="nav-link" to={'/account/new'}>
               {' '}
+              Регистрация
             </NavLink>
-            {user.status === 'logged' ? (
-              <Button variant="red" className="ms-auto" onClick={logoutHandler}>
-                {' '}
-                Выйти
-              </Button>
-            ) : (
-              <>
-                <NavLink className="nav-link" to={'/account/new'}>
-                  {' '}
-                  Регистрация
-                </NavLink>
-                <NavLink className="nav-link" to={'/account/login'}>
-                  {' '}
-                  Войти
-                </NavLink>
-              </>
-            )}
-          </Nav>
-        </Container>
-      </Navbar>
-    </div>
+            <NavLink className="nav-link" to={'/account/login'}>
+              {' '}
+              Войти
+            </NavLink>
+          </>
+        )}
+
+    </Navbar>
   );
 }

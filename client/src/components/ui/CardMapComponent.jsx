@@ -14,7 +14,7 @@ export default function CardMapComponent({ route }) {
 
   return (
     <>
-      <Card style={{ height: '30rem', width: '50rem' }} key={route.id}>
+      <Card style={{ height: '40rem', width: '50rem' }} key={route.id}>
         <YMaps>
           <Map
           style={{ height: '100%', width: '100%' }}
@@ -49,17 +49,17 @@ export default function CardMapComponent({ route }) {
           <ListGroup.Item>Локация: {route.location}</ListGroup.Item>
           <ListGroup.Item>Начальная точка: {route.startPoint}</ListGroup.Item>
           <ListGroup.Item>Конечная точка: {route.endPoint}</ListGroup.Item>
-          <ListGroup.Item>Расстояние {route.routeLength}</ListGroup.Item>
+          <ListGroup.Item>Расстояние {route.routeLength} метров</ListGroup.Item>
         </ListGroup>
-      </Card>
-      <Card.Body>
         <Button
           variant="primary"
-          style={{ width: '100%' }}
+          style={{ marginTop: '10px' }}
           onClick={() => navigate(`/route/${route.id}`)}
         >
           Подробнее
         </Button>
+      </Card>
+      <Card.Body>
       </Card.Body>
     </>
   );

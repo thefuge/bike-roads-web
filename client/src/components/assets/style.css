@@ -1,12 +1,29 @@
 * {
-  font-family: 'Days one', sans-serif;
+  font-family: 'Jost', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
 }
 
-.me-auto {
-  margin-right: 0 !important;
+body {
+  background-image: url(./123123.jpg);
+  /* background-image: url(./321.jpg); */
+  background-position: right;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  /* background-size: cover; */
 }
-h1 {
-  display: flex;
-  justify-content: center;
+
+.navbar {
+  gap: 25px;
+  padding-left: 50px;
+  padding-right: 100px;
+  background-color: lightGray;
+  /* position: fixed; */
+  height: 70px;
+  width: 100%;
+  z-index: 100, 
+}
+
+h2 {
   font-size: 50px;
 }

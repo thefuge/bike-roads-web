@@ -67,42 +67,46 @@ routeRouter.route("/allRated").get(async (req, res) => {
       group: ["Route.id"],
       order: [[sequelize.col("average_rating"), "DESC"]],
     });
-  
+
     res.json(allRated);
   } catch (error) {
     console.log(error);
   }
 });
 
-routeRouter.route("/:id").get(async (req, res) => {
-  try {
-    const { id } = req.params;
-    const oneRoute = await Route.findByPk(id);
-    res.json(oneRoute);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Ошибка сервера" });
-  }
-}).delete(verifyAccessToken, async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const oneRoute = await Route.findByPk(id);
-    if (!oneRoute) return res.status(404).json({ message: 'Событие не найдено' });
-
-    if (oneRoute.userId !== res.locals.user.id) {
-      return res.status(403).json({ message: 'Нет доступа' });
+routeRouter
+  .route("/:id")
+  .get(async (req, res) => {
+    try {
+      const { id } = req.params;
+      const oneRoute = await Route.findByPk(id);
+      res.json(oneRoute);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Ошибка сервера" });
     }
+  })
+  .delete(verifyAccessToken, async (req, res) => {
+    try {
+      const { id } = req.params;
 
-    await Route.destroy({ where: { id } });
-    res.sendStatus(200);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: 'Ошибка сервера' });
-  }
-});
+      const oneRoute = await Route.findByPk(id);
+      if (!oneRoute)
+        return res.status(404).json({ message: "Событие не найдено" });
 
-routeRouter.route("/:id_with_averagegRating").get(async (req, res) => {
+      if (oneRoute.userId !== res.locals.user.id) {
+        return res.status(403).json({ message: "Нет доступа" });
+      }
+
+      await Route.destroy({ where: { id } });
+      res.sendStatus(200);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Ошибка сервера" });
+    }
+  });
+
+routeRouter.route("/:id/with_averagegRating").get(async (req, res) => {
   try {
     const { id } = req.params;
     const oneRoute = await Route.findByPk(id);
@@ -125,7 +129,7 @@ routeRouter.route("/:id_with_averagegRating").get(async (req, res) => {
   }
 });
 
-routeRouter.route(":id/rate").post(verifyAccessToken, async (req, res) => {
+routeRouter.route("/:id/rate").post(verifyAccessToken, async (req, res) => {
   try {
     const { id } = req.params;
     const { routeRate, routeReview } = req.body;
@@ -150,7 +154,12 @@ routeRouter.route(":id/rate").post(verifyAccessToken, async (req, res) => {
       routeReview: routeReview || null,
     });
 
-    res.json(rating);
+    const user = await User.findByPk(userId);
+
+    res.json({
+      ...rating.toJSON(),
+      userName: user ? user.name : null,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Ошибка сервера" });
@@ -166,9 +175,27 @@ routeRouter.route("/:id/ratingsAll").get(async (req, res) => {
       return res.status(404).json({ message: "Маршрут не найден" });
     }
 
-    const ratings = await Rating.findAll({ where: { routeId: id } });
+    const ratings = await Rating.findAll({
+      where: { routeId: id },
+      include: [
+        {
+          model: User,
+          attributes: ["name"],
+        },
+      ],
+      order: [["createdAt", "DESC"]],
+    });
 
-    res.json(ratings);
+    const formattedRatings = ratings.map((rating) => ({
+      userId: rating.userId,
+      routeId: rating.routeId,
+      routeRate: rating.routeRate,
+      routeReview: rating.routeReview,
+      createdAt: rating.createdAt,
+      userName: rating.User.name,
+    }));
+
+    res.json(formattedRatings);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Ошибка сервера" });

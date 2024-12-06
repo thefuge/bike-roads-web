@@ -6,6 +6,8 @@ import MainPage from "./components/pages/MainPage";
 import Layout from "./components/Layout";
 import useUser from "./components/hooks/useUser";
 import ProfilePage from "./components/pages/ProfilePage";
+import RouteOneCard from "./components/pages/RouteOneCard";
+import NotFoundPage from "./components/pages/NotFoundPage"
 
 
 function App() {
@@ -21,6 +23,14 @@ function App() {
           element: <MainPage user={user} />,
         },
         {
+          path: '*',
+          element: <NotFoundPage />,
+        },
+        {
+          path: '/route/:id',
+          element: <RouteOneCard />,
+        },
+        {
           element: (
             <ProtectedRouter
               isAllowed={user.status === 'logged'}
@@ -32,10 +42,7 @@ function App() {
               path: '/profile',
               element: <ProfilePage user={user} />,
             },
-            {
-              path: '/route/:id',
-              element: <MainPage />,
-            },
+          
           ],
         },
         {
@@ -51,7 +58,7 @@ function App() {
               path: '/account/login',
               element: <LoginPage signInHandler={signInHandler} />,
             },
-
+           
           ],
         },
       ],
